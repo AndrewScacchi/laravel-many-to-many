@@ -12,7 +12,11 @@ class Tag extends Model
         'name',
     ];
 
+    //public function posts() {
+    //    return $this->belongsToMany('App/Models/Post');
+    //}
+
     public function posts() {
-        return $this->belongsToMany('App/Models/Post');
+        return $this->belongsToMany('App\Models\Post');
     }
 }
