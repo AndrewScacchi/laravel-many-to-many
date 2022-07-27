@@ -14,7 +14,7 @@ class PostSeeder extends Seeder
 
         for ($i = 0; $i < 100; $i++) {
             $post = new Post;
-            // $post->title = $faker->words(rand(2, 4), true);
+            $post->title = $faker->words(rand(2, 4), true);
             $post->category_id = $faker->randomElement($categories_ids);
             $post->title = 'ciao a tutti!@';
             $post->slug = Post::getSlug($post->title);
