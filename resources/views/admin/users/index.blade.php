@@ -1,6 +1,7 @@
 @extends('admin.layouts.base')
 
 @section('mainContent')
+    <h1>Users</h1>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -18,29 +19,13 @@
                     <td>{{ $user->id }}</td>
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
-                    {{-- userDetails() is the method to acced data from other tab, get() necessary --}}
 
                     @php
                         $details = $user->userDetails()->first()
                     @endphp
-
-                    {{-- get not first! --}}
-                    @if($user->userDetails()->get())
-                    <td>{{ $details ? $details->address : "no data" }}</td>
-                    <td>{{ $details ? $details->phone : "no data" }}</td>
-                    <td>{{ $details ? $details->birth : "no data" }}</td>
-
-                    @endif
-
-                    <td>
-                        <a href="{{--{{ route('admin.users.show', ['user' => $user]) }}--}}" class="btn btn-primary">View</a>
-                    </td>
-                    <td>
-                        <a href="{{--{{ route('admin.users.edit', ['user' => $user]) }}--}}" class="btn btn-warning">Edit</a>
-                    </td>
-                    <td>
-                        <button class="btn btn-danger js-delete">Delete</button>
-                    </td>
+                    <td>{{ $details ? ($details->address ?: '-') : '-' }}</td>
+                    <td>{{ $details ? ($details->phone ?: '-') : '-' }}</td>
+                    <td>{{ $details ? ($details->birth ?: '-') : '-' }}</td>
                 </tr>
             @endforeach
         </tbody>

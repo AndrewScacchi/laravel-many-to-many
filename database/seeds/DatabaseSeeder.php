@@ -11,14 +11,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-
-
         $this->call(UserSeeder::class);
-        //$this->call(UserDetails::class); // do you wanna add seeder for userdetails?
+        $this->call(UserDetailsSeeder::class);
         $this->call(CategorySeeder::class);
-        $this->call(TagSeeder::class);
         $this->call(PostSeeder::class);
-        $this->call(PostTagSeeder::class);//perchè non funzioni????
-
+        $this->call(TagSeeder::class);
+        $this->call(PostTagSeeder::class);
     }
 }

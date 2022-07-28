@@ -27799,10 +27799,33 @@ module.exports = function(module) {
 /*!******************************!*\
   !*** ./resources/js/back.js ***!
   \******************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.esm.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+
+
+var eleOverlay = document.querySelector('.overlay');
+
+if (eleOverlay) {
+  var deleteButtons = document.querySelectorAll('.js-delete');
+  var formPopup = document.querySelector('.popup');
+  deleteButtons.forEach(function (button) {
+    button.addEventListener('click', function () {
+      eleOverlay.classList.remove('d-none');
+      var id = this.closest('[data-id]').dataset.id;
+      var pattern = formPopup.dataset.action;
+      var newAction = pattern.replace('*****', id);
+      formPopup.action = newAction;
+    });
+  });
+  document.querySelector('.js-no').addEventListener('click', function () {
+    eleOverlay.classList.add('d-none');
+  });
+}
 
 /***/ }),
 
@@ -27859,7 +27882,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\ANDREA\01_WebDev\01_boolean\php\00_laravel\laravel-many-to-many\resources\js\back.js */"./resources/js/back.js");
+module.exports = __webpack_require__(/*! C:\ANDREA\01_WebDev\01_boolean\php\00_laravel\laravel-project-copy-boolpress\resources\js\back.js */"./resources/js/back.js");
 
 
 /***/ })

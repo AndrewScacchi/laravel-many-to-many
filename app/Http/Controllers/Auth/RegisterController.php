@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
 use App\Providers\RouteServiceProvider;
+use Exception;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -58,9 +59,9 @@ class RegisterController extends Controller
             'name'      => ['required', 'string', 'max:255'],
             'email'     => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password'  => ['required', 'string', 'min:8', 'confirmed'],
-            'address'   => ['string', 'max:100'],
-            'phone'     => ['string', 'max:20'],
-            'birth'     => ['date'],
+            'address'   => ['nullable', 'string', 'max:100'],
+            'phone'     => ['nullable', 'string', 'max:20'],
+            'birth'     => ['nullable', 'date']
         ]);
     }
 
@@ -72,10 +73,8 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        //added
-        try{
-            // added DB::transaction to group multiple db action to be done together, added use ($data) to punch a hole through the function to be able to read the $data var
-            $user = DB::transaction(function() use($data) {
+        try {
+            $user = DB::transaction(function () use ($data) {
                 $user = User::create([
                     'name'      => $data['name'],
                     'email'     => $data['email'],
@@ -83,43 +82,41 @@ class RegisterController extends Controller
                 ]);
 
                 UserDetails::create([
-                    'user_id'   => $user->id, // assigning the users id as the Pkey of UserDetails
-                    'address'   => $data['address'], // to change back to 'addressError' //TEST this error
+                    'user_id'   => $user->id,
+                    'address'   => $data['address'],
                     'phone'     => $data['phone'],
                     'birth'     => $data['birth'],
                 ]);
 
                 return $user;
             });
+
             return $user;
         } catch (Exception $e) {
             return null;
         }
     }
 
-
-    // this function deals with errors in the code
     public function register(Request $request)
-        {
-            $this->validator($request->all())->validate();
-            $user = $this->create($request->all());
+    {
+        $this->validator($request->all())->validate();
 
-            if($user){
-                event(new Registered($user));
+        $user = $this->create($request->all());
 
-                $this->guard()->login($user);
+        if ($user) {
+            event(new Registered($user));
 
-                if ($response = $this->registered($request, $user)) {
-                    return $response;
-                }
+            $this->guard()->login($user);
 
-                return $request->wantsJson()
-                            ? new JsonResponse([], 201)
-                            : redirect($this->redirectPath());
-
-            } else {
-                return redirect()->route('register')->with('db-error', 'Database error, please try again');
+            if ($response = $this->registered($request, $user)) {
+                return $response;
             }
 
+            return $request->wantsJson()
+                        ? new JsonResponse([], 201)
+                        : redirect($this->redirectPath());
+        } else {
+            return redirect()->route('register')->with('db-error', 'Errore nel DB. Riprovare');
         }
+    }
 }

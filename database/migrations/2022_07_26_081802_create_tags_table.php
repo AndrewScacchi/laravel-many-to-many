@@ -15,8 +15,7 @@ class CreateTagsTable extends Migration
     {
         Schema::create('tags', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 50);
-            //removed timestamps, now to remove them on model
+            $table->string('name', 30);
         });
     }
 

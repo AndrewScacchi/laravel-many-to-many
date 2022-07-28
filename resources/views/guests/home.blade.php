@@ -83,7 +83,6 @@
                 <div class="title m-b-md">
                     Boolpress (coming soon...)
                 </div>
-                <h2 class="m-b-md">Many to Many</h2>
             </div>
         </div>
     </body>

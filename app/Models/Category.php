@@ -11,7 +11,13 @@ class Category extends Model
 
     public $timestamps = false;
 
-    public function post(){
-        return $this->hasMany('App/Models/Post');
+    public function posts() {
+        return $this->hasMany('App\Models\Post');
+    }
+
+    // per usare nei link lo slug anzichè l'id
+    public function getRouteKeyName()
+    {
+        return 'slug';
     }
 }

@@ -1,3 +1,7 @@
+# TODOS
+- assegnare post all'utente
+
+
 # Progetto Laravel con login
 
 ## Inizializzazione

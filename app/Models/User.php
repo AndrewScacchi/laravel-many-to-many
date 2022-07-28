@@ -37,10 +37,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    //fx named after the other tab
-    //methods start with lowercase
-    public function userDetails(){
-        return $this->hasOne('App\Models\UserDetails'); //in the tab WITHOUT foreign key
-        //return $this->belongsTo('App\Models\User'); //in the tab WITH foreign key
+    public function userDetails() {
+        return $this->hasOne('App\Models\UserDetails'); // nella tabella che non ha il foreign key
+    }
+
+    public function posts() {
+        return $this->hasMany('App\Models\Post');
     }
 }

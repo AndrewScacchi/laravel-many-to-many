@@ -12,11 +12,11 @@ class TagSeeder extends Seeder
      */
     public function run()
     {
-        $tags = ['italy', 'foreign', 'Js', 'OOP','Vue', 'cats','dogs','opEd','self-improvement','life-advice'];
+        $tags = ['Italy', 'Macroeconomics', 'Js', 'OOP', 'Vue', 'Laravel', 'Eggs', 'Tomatoes', 'Writing', 'Reading'];
 
-        foreach( $tags as $tag){
+        foreach ($tags as $tag) {
             Tag::create([
-                'name' => $tag,
+                'name'  => $tag,
             ]);
         }
     }
